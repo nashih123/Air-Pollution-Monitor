@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Sign Up</title>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+
+  <style>
+    body {
+  font-family: Arial, sans-serif;
+  background-image: url("pollution-bg.jpg"); /* local image */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+    .signup-box {
+      background: white;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      text-align: center;
+      width: 300px;
+    }
+
+    .signup-box input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    .signup-box button {
+      padding: 10px 20px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .signup-box p {
+      margin-top: 10px;
+    }
+
+    .signup-box a {
+      color: #28a745;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="signup-box">
+    <h2>Register</h2>
+    <input type="email" id="email" placeholder="Email" required /><br>
+    <input type="password" id="password" placeholder="Password" required /><br>
+    <input type="password" id="confirmPassword" placeholder="Confirm Password" required /><br>
+    <button onclick="signup()">Sign Up</button>
+    <p>Already have an account? <a href="login.html">Login here</a></p>
+  </div>
+
+  <script>
+    // Firebase config – same as your project
+    const firebaseConfig = {
+      apiKey: "AIzaSyCIajd8dByDlJ5fsI2NDtIktJxqXklTTjo",
+      authDomain: "air-pollution-montoring.firebaseapp.com",
+      projectId: "air-pollution-montoring",
+      databaseURL: "https://air-pollution-montoring-default-rtdb.asia-southeast1.firebasedatabase.app",
+      storageBucket: "air-pollution-montoring.appspot.com",
+      messagingSenderId: "150287112615",
+      appId: "1:150287112615:web:c110401a426819d681be82"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+
+    function signup() {
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+      const confirmPassword = document.getElementById("confirmPassword").value;
+
+      if (!email || !password || !confirmPassword) {
+        alert("⚠️ Please fill all fields");
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        alert("⚠️ Passwords do not match");
+        return;
+      }
+
+      firebase.auth().createUserWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+          alert("✅ Account created! You can now login.");
+          window.location.href = "login.html"; // Redirect to login page
+        })
+        .catch((error) => {
+          alert("❌ " + error.message);
+        });
+    }
+  </script>
+
+</body>
+</html>
